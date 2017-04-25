@@ -45,6 +45,15 @@ const RootQuery = new GraphQLObjectType({
           data.json()
         );
       }
+    },
+    company: {
+      type: CompanyType,
+      args: { id: { type: GraphQLString } },
+      resolve(parentValue, args) {
+        return fetch(`http://localhost:3000/companies/${args.id}`).then(data =>
+          data.json()
+        );
+      }
     }
   }
 });
