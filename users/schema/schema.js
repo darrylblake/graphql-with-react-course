@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const _ = require("lodash");
+const fetch = require("node-fetch");
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLSchema } = graphql;
 
 const users = [
@@ -24,8 +24,9 @@ const RootQuery = new GraphQLObjectType({
       type: UserType,
       args: { id: { type: GraphQLString } },
       resolve(parentValue, args) {
-        console.log(parentValue, args);
-        return _.find(users, { id: args.id });
+        return fetch(`http://localhost:3000/users/${args.id}`).then(data =>
+          data.json()
+        );
       }
     }
   }
