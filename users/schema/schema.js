@@ -8,12 +8,29 @@ const users = [
   { id: "8", firstname: "Ben", age: 98 }
 ];
 
+const CompanyType = new GraphQLObjectType({
+  name: "Company",
+  fields: {
+    id: { type: GraphQLString },
+    name: { type: GraphQLString },
+    description: { type: GraphQLString }
+  }
+});
+
 const UserType = new GraphQLObjectType({
-  name: "user",
+  name: "User",
   fields: {
     id: { type: GraphQLString },
     firstname: { type: GraphQLString },
-    age: { type: GraphQLInt }
+    age: { type: GraphQLInt },
+    company: {
+      type: CompanyType,
+      resolve(parentValue, args) {
+        return fetch(
+          `http://localhost:3000/companies/${parentValue.companyId}`
+        ).then(data => data.json());
+      }
+    }
   }
 });
 
