@@ -5,7 +5,8 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLSchema,
-  GraphQLList
+  GraphQLList,
+  GraphQLNonNull
 } = graphql;
 
 const users = [
@@ -35,7 +36,7 @@ const UserType = new GraphQLObjectType({
   name: "User",
   fields: () => ({
     id: { type: GraphQLString },
-    firstname: { type: GraphQLString },
+    firstName: { type: GraphQLString },
     age: { type: GraphQLInt },
     company: {
       type: CompanyType,
@@ -72,6 +73,42 @@ const RootQuery = new GraphQLObjectType({
   }
 });
 
+/*
+  mutation {
+    addUser(firstName: "James", age: 35) {
+      id
+      firstName
+      age
+    }
+  }
+*/
+const mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    addUser: {
+      type: UserType,
+      args: {
+        firstName: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLInt) },
+        companyId: { type: GraphQLString }
+      },
+      resolve(parentValue, { firstName, age }) {
+        return fetch("http://localhost:3000/users/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            firstName,
+            age
+          })
+        }).then(data => data.json());
+      }
+    }
+  }
+});
+
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation
 });
