@@ -104,6 +104,17 @@ const mutation = new GraphQLObjectType({
           })
         }).then(data => data.json());
       }
+    },
+    deleteUser: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parentValue, { id }) {
+        return fetch(`http://localhost:3000/users/${id}`, {
+          method: "DELETE"
+        }).then(data => data.json());
+      }
     }
   }
 });
