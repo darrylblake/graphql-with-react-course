@@ -2,31 +2,31 @@
   "users": [
     {
       "id": "23",
-      "firstname": "Charlie",
+      "firstName": "Charlie",
       "age": 30,
       "companyId": "1"
     },
     {
       "id": "54",
-      "firstname": "Darryl",
+      "firstName": "Darryl",
       "age": 32,
       "companyId": "2"
     },
     {
       "id": "48",
-      "firstname": "Becky",
+      "firstName": "Becky",
       "age": 31,
       "companyId": "2"
     },
     {
       "id": "21",
-      "firstname": "Jack",
+      "firstName": "Jack",
       "age": 36,
       "companyId": "1"
     },
     {
       "id": "40",
-      "firstname": "Alex",
+      "firstName": "Alex",
       "age": 23,
       "companyId": "1"
     }
