@@ -9,12 +9,6 @@ const {
   GraphQLNonNull
 } = graphql;
 
-const users = [
-  { id: "23", firstname: "Bill", age: 20 },
-  { id: "48", firstname: "Sam", age: 21 },
-  { id: "8", firstname: "Ben", age: 98 }
-];
-
 const CompanyType = new GraphQLObjectType({
   name: "Company",
   fields: () => ({
@@ -113,6 +107,24 @@ const mutation = new GraphQLObjectType({
       resolve(parentValue, { id }) {
         return fetch(`http://localhost:3000/users/${id}`, {
           method: "DELETE"
+        }).then(data => data.json());
+      }
+    },
+    editUser: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLString) },
+        firstName: { type: GraphQLString },
+        age: { type: GraphQLInt },
+        companyId: { type: GraphQLString }
+      },
+      resolve(parentValue, args) {
+        return fetch(`http://localhost:3000/users/${args.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(args)
         }).then(data => data.json());
       }
     }
