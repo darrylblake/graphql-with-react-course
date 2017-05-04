@@ -29,7 +29,6 @@ class LyricCreate extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <form onSubmit={this.handleSubmit}>
         <label>Add a Lyric</label>
