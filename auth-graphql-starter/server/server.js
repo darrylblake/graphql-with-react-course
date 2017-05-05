@@ -7,7 +7,7 @@ const passport = require("passport");
 const passportConfig = require("./services/auth");
 const MongoStore = require("connect-mongo")(session);
 const schema = require("./schema/schema");
-const MONGI_URI = require("./MONGO_URI");
+const MONGO_URI = require("./MONGO_URI");
 
 // Create a new Express application
 const app = express();
